@@ -3,3 +3,11 @@
 <h1>Machine Details</h1>
 
 <p>Name: @Model.Name</p>
+<h3>Engineers:</h3>
+@foreach (var engineerMachine in Model.EngineerMachines)
+{
+    if (engineerMachine?.Engineer != null)
+    {
+        <p>@engineerMachine.Engineer.Name</p>
+    }
+}

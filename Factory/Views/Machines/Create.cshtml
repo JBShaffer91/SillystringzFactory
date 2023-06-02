@@ -1,9 +1,23 @@
 @model Factory.Models.Machine
+@using Factory.Models
+@{
+    ViewData["Title"] = "Create";
+}
 
 <h1>Create New Machine</h1>
 
-@using (Html.BeginForm())
-{
-  @Html.EditorFor(model => model.Name)
-  <input type="submit" value="Create" />
-}
+<form asp-action="Create">
+  <div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="EngineerMachines" class="control-label">Select Engineers</label>
+    <select asp-for="EngineerMachines" asp-items="@(new SelectList(ViewBag.Engineers,"EngineerId","Name"))" class="form-control"></select>
+    <span asp-validation-for="EngineerMachines" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <input type="submit" value="Create" class="btn btn-primary" />
+  </div>
+</form>
