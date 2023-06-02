@@ -1,0 +1,10 @@
+@model Factory.Models.Engineer
+
+<h1>Add a new Engineer</h1>
+
+<form action="/Engineers/Create" method="post">
+    <label for="name">Name</label>
+    <input type="text" name="Name" id="name" required />
+
+    <button type="submit">Create</button>
+</form>

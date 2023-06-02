@@ -1,0 +1,8 @@
+@model IEnumerable<Factory.Models.Engineer>
+
+<h1>Engineers</h1>
+
+@foreach (var engineer in Model)
+{
+  <p>@engineer.Name</p>
+}

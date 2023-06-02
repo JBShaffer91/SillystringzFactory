@@ -1,0 +1,12 @@
+@model Factory.Models.Engineer
+
+<h1>Edit @Model.Name</h1>
+
+<form action="/Engineers/Edit/@Model.EngineerId" method="post">
+    <input type="hidden" name="EngineerId" value="@Model.EngineerId" />
+
+    <label for="name">Name</label>
+    <input type="text" name="Name" id="name" value="@Model.Name" required />
+
+    <button type="submit">Edit</button>
+</form>

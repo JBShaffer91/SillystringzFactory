@@ -1,0 +1,7 @@
+@model Factory.Models.Engineer
+
+<h1>Are you sure you want to delete @Model.Name?</h1>
+
+<form action="/Engineers/Delete/@Model.EngineerId" method="post">
+    <button type="submit">Yes</button>
+</form>
