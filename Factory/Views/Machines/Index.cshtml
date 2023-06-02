@@ -1,0 +1,10 @@
+@model IEnumerable<Factory.Models.Machine>
+
+<h1>Machines</h1>
+
+@foreach (var machine in Model)
+{
+  <p>
+    @Html.ActionLink(machine.Name, "Details", new { id = machine.MachineId })
+  </p>
+}

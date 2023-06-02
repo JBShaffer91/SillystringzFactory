@@ -1,0 +1,10 @@
+@model Factory.Models.Machine
+
+<h1>Edit Machine</h1>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.MachineId)
+  @Html.EditorFor(model => model.Name)
+  <input type="submit" value="Edit" />
+}

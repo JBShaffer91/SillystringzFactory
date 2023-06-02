@@ -1,0 +1,9 @@
+@model Factory.Models.Machine
+
+<h1>Create New Machine</h1>
+
+@using (Html.BeginForm())
+{
+  @Html.EditorFor(model => model.Name)
+  <input type="submit" value="Create" />
+}

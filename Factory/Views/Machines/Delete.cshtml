@@ -1,0 +1,11 @@
+@model Factory.Models.Machine
+
+<h1>Delete Machine</h1>
+
+<p>Are you sure you want to delete this Machine: @Model.Name?</p>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.MachineId)
+  <input type="submit" value="Delete" />
+}
