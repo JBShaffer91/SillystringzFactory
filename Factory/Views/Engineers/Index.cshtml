@@ -1,8 +1,23 @@
 @model IEnumerable<Factory.Models.Engineer>
 
-<h1>Engineers</h1>
-
-@foreach (var engineer in Model)
-{
-  <p>@engineer.Name</p>
-}
+<h2>Engineers</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>@Html.DisplayNameFor(model => model.Name)</th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach (var item in Model) 
+  {
+    <tr>
+      <td>@Html.DisplayFor(modelItem => item.Name)</td>
+      <td>
+        <a href="@Url.Action("Edit", new { id = item.EngineerId })">Edit</a> |
+        <a href="@Url.Action("Details", new { id = item.EngineerId })">Details</a> |
+        <a href="@Url.Action("Delete", new { id = item.EngineerId })">Delete</a>
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>

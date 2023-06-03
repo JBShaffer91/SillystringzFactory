@@ -1,4 +1,21 @@
 @model Factory.Models.Engineer
 
-<h1>@Model.Name</h1>
-<p>Engineer ID: @Model.EngineerId</p>
+<h2>Details</h2>
+
+<div>
+  <h4>Engineer</h4>
+  <hr />
+  <dl class="dl-horizontal">
+    <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+    <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+    <dt>Machines</dt>
+    @foreach(var item in Model.EngineerMachines)
+    {
+      if(item.Machine != null)
+      {
+        <dd>@Html.DisplayFor(modelItem => item.Machine.Name)</dd>
+      }
+    }
+  </dl>
+</div>

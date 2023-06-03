@@ -1,12 +1,27 @@
 @model Factory.Models.Engineer
+@using (Html.BeginForm()) 
+{
+  @Html.AntiForgeryToken()
 
-<h1>Edit @Model.Name</h1>
+  <div class="form-horizontal">
+    <h2>Edit</h2>
+    <hr />
 
-<form action="/Engineers/Edit/@Model.EngineerId" method="post">
-    <input type="hidden" name="EngineerId" value="@Model.EngineerId" />
+    <div class="form-group">
+      @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+      @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
 
-    <label for="name">Name</label>
-    <input type="text" name="Name" id="name" value="@Model.Name" required />
+    <div class="form-group">
+      @Html.Label("Machines", new { @class = "control-label col-md-2" })
+      @Html.ListBox("MachineId", (MultiSelectList)ViewBag.MachineId, new { @class = "form-control" })
+    </div>
 
-    <button type="submit">Edit</button>
-</form>
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Edit" class="btn btn-default" />
+      </div>
+    </div>
+  </div>
+}
