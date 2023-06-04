@@ -25,7 +25,33 @@ cd Factory
 ```
 3. Update the Database Connection: Update the "DefaultConnection" string in appsettings.json to match your local database server configuration.
 
-4. Install the Dependencies:
+4. ## Configuring the Database Connection
+
+This application uses a MySQL database. The connection string for the database is stored in a file called `appsettings.json`. This file is not included in the version control system for security reasons, so you'll need to create it yourself. 
+
+Here are the steps:
+
+1. **Create a New File:** In the root directory of the project, create a new file called `appsettings.json`.
+
+2. **Add the Connection String:** Open the new file in a text editor and add the following JSON:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=factory_db;Uid=root;Pwd=YourPassword;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+
+5. Install the Dependencies:
 
 ```bash
 dotnet restore
@@ -34,7 +60,7 @@ Update the Database: Apply the database migrations using Entity Framework Core:
 ```bash
 dotnet ef database update
 ```
-Run the Application: Use the .NET CLI to run the application:
+6. Run the Application: Use the .NET CLI to run the application:
 ```bash
 dotnet run
 ```
