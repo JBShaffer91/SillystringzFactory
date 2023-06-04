@@ -49,7 +49,12 @@ Here are the steps:
   },
   "AllowedHosts": "*"
 }
+```
+Make sure to replace "YourPassword" with the actual password for your MySQL root user. If your MySQL server is not running on localhost, or if you're using a different database or user, you'll need to update those details as well.
 
+3. Save the File: Save the appsettings.json file and close it. The application is now configured to connect to your MySQL database. If you're running the application for the first time, you'll need to create the database and apply the migrations, as described in the "Setup" section above.
+
+This section provides a simple explanation of how to set up the `appsettings.json` file and configure the database connection. It also provides a sample connection string that users can modify based on their own MySQL server configuration.
 
 5. Install the Dependencies:
 
