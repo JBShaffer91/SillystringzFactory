@@ -25,7 +25,7 @@ cd Factory
 ```
 3. Update the Database Connection: Update the "DefaultConnection" string in appsettings.json to match your local database server configuration.
 
-4. ## Configuring the Database Connection
+4. Configuring the Database Connection
 
 This application uses a MySQL database. The connection string for the database is stored in a file called `appsettings.json`. This file is not included in the version control system for security reasons, so you'll need to create it yourself. 
 
