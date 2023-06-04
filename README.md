@@ -12,16 +12,16 @@ This application supports full CRUD (Create, Read, Update, Delete) operations fo
 - **Delete:** Delete an engineer or machine.
 
 ## Technologies Used
-VSCode
-GitBash
-C#
-.NET6 SDK
-WindowPowerShell
-Razor
-CSS
-HTML
-MySQL Server
-MySQL Workbench
+- VSCode
+- GitBash
+- C#
+- .NET6 SDK
+- WindowPowerShell
+- Razor
+- CSS
+- HTML
+- MySQL Server
+- MySQL Workbench
 
 ## Setup
 
