@@ -10,11 +10,14 @@
     <dd>@Html.DisplayFor(model => model.Name)</dd>
 
     <dt>Machines</dt>
-    @foreach(var item in Model.EngineerMachines)
+    @if(Model.EngineerMachines != null)
     {
-      if(item.Machine != null)
+      foreach(var item in Model.EngineerMachines)
       {
-        <dd>@Html.DisplayFor(modelItem => item.Machine.Name)</dd>
+        if(item.Machine != null)
+        {
+            <dd>@Html.DisplayFor(modelItem => item.Machine.Name)</dd>
+        }
       }
     }
   </dl>

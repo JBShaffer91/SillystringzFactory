@@ -31,8 +31,8 @@ namespace Factory.Controllers
     public ActionResult Create(Engineer engineer, List<int> MachineId)
     {
       _db.Engineers.Add(engineer);
-      _db.SaveChanges();
-      if (MachineId.Count != 0)
+      
+      if (MachineId != null && MachineId.Count != 0)
       {
         foreach (int id in MachineId)
         {
@@ -49,42 +49,59 @@ namespace Factory.Controllers
         .Include(engineer => engineer.EngineerMachines)
         .ThenInclude(join => join.Machine)
         .FirstOrDefault(engineer => engineer.EngineerId == id);
+
+      if(thisEngineer == null)
+      {
+        return NotFound();
+      }
+
       return View(thisEngineer);
     }
 
     public ActionResult Edit(int id)
     {
       var thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
-      ViewBag.MachineId = new MultiSelectList(_db.Machines, "MachineId", "Name");
-      if (thisEngineer == null)
+
+      if(thisEngineer == null)
       {
         return NotFound();
       }
+
+      ViewBag.MachineId = new MultiSelectList(_db.Machines, "MachineId", "Name");
       return View(thisEngineer);
     }
 
     [HttpPost]
     public ActionResult Edit(Engineer engineer, List<int> MachineId)
     {
-      if (MachineId.Count != 0)
+      if (ModelState.IsValid)
       {
-        foreach (int id in MachineId)
+        var currentEngineerMachines = _db.EngineerMachines.Where(em => em.EngineerId == engineer.EngineerId);
+        _db.EngineerMachines.RemoveRange(currentEngineerMachines);
+
+        if (MachineId != null && MachineId.Count != 0)
         {
-          _db.EngineerMachines.Add(new EngineerMachine() { MachineId = id, EngineerId = engineer.EngineerId });
+          foreach (int id in MachineId)
+          {
+            _db.EngineerMachines.Add(new EngineerMachine() { MachineId = id, EngineerId = engineer.EngineerId });
+          }
         }
+        _db.Entry(engineer).State = EntityState.Modified;
+        _db.SaveChanges();
+        return RedirectToAction("Index");
       }
-      _db.Entry(engineer).State = EntityState.Modified;
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      return View(engineer);
     }
 
     public ActionResult Delete(int id)
     {
       var thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
-      if (thisEngineer == null)
+      
+      if(thisEngineer == null)
       {
         return NotFound();
       }
+
       return View(thisEngineer);
     }
 
@@ -92,11 +109,18 @@ namespace Factory.Controllers
     public ActionResult DeleteConfirmed(int id)
     {
       var thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
-      if (thisEngineer == null)
+      var engineerMachines = _db.EngineerMachines.Where(em => em.EngineerId == id);
+
+      if (thisEngineer != null)
       {
-        return NotFound();
+        _db.Engineers.Remove(thisEngineer);
       }
-      _db.Engineers.Remove(thisEngineer);
+
+      if (engineerMachines.Any())
+      {
+        _db.EngineerMachines.RemoveRange(engineerMachines);
+      }
+
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

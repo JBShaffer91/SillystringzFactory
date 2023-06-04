@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Factory.Migrations
 {
     [DbContext(typeof(FactoryContext))]
-    [Migration("20230602001958_InitialCreate")]
+    [Migration("20230603011926_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -18,7 +18,7 @@ namespace Factory.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Factory.Models.Engineer", b =>
