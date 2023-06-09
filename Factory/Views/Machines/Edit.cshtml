@@ -1,6 +1,10 @@
 @model Factory.Models.Machine
+@using Factory.Models
+
 @{
     ViewData["Title"] = "Edit";
+    int[] SelectedEngineers = Model.EngineerMachines != null ? Model.EngineerMachines.Select(em => em.EngineerId).ToArray() : new int[0];
+    var engineers = ViewBag.Engineers ?? new List<Engineer>();
 }
 
 <h1>Edit Machine</h1>
@@ -13,9 +17,8 @@
     <span asp-validation-for="Name" class="text-danger"></span>
   </div>
   <div class="form-group">
-    <label asp-for="EngineerMachines" class="control-label">Select Engineers</label>
-    <select asp-for="EngineerMachines" asp-items="@(new SelectList(ViewBag.Engineers,"EngineerId","Name"))" class="form-control"></select>
-    <span asp-validation-for="EngineerMachines" class="text-danger"></span>
+    <label class="control-label">Select Engineers</label>
+    <select name="SelectedEngineers" asp-items="ViewBag.Engineers" class="form-control" multiple="multiple"></select>
   </div>
   <div class="form-group">
     <input type="submit" value="Save" class="btn btn-primary" />

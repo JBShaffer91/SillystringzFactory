@@ -1,7 +1,9 @@
 @model Factory.Models.Engineer
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Edit", "Engineers", FormMethod.Post)) 
 {
   @Html.AntiForgeryToken()
+
+  @Html.HiddenFor(model => model.EngineerId)
 
   <div class="form-horizontal">
     <h2>Edit</h2>
@@ -17,7 +19,6 @@
       @Html.Label("MachineId", "Machines", new { @class = "control-label col-md-2" })
       @Html.ListBox("MachineId", (MultiSelectList)ViewBag.MachineId, new { @class = "form-control" })
     </div>
-
 
     <div class="form-group">
       <div class="col-md-offset-2 col-md-10">

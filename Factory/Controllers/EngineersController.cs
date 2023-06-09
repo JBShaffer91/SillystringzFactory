@@ -30,17 +30,25 @@ namespace Factory.Controllers
     [HttpPost]
     public ActionResult Create(Engineer engineer, List<int> MachineId)
     {
-      _db.Engineers.Add(engineer);
-      
-      if (MachineId != null && MachineId.Count != 0)
+      if (ModelState.IsValid)
       {
-        foreach (int id in MachineId)
+        _db.Engineers.Add(engineer);
+        _db.SaveChanges();
+
+        if (MachineId.Count != 0)
         {
-          _db.EngineerMachines.Add(new EngineerMachine() { MachineId = id, EngineerId = engineer.EngineerId });
+          foreach (int id in MachineId)
+          {
+            _db.EngineerMachines.Add(new EngineerMachine() { MachineId = id, EngineerId = engineer.EngineerId });
+          }
         }
+
+        _db.SaveChanges();
+        return RedirectToAction("Index");
       }
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+
+      ViewBag.MachineId = new MultiSelectList(_db.Machines, "MachineId", "Name", MachineId);
+      return View(engineer);
     }
 
     public ActionResult Details(int id)
@@ -60,14 +68,18 @@ namespace Factory.Controllers
 
     public ActionResult Edit(int id)
     {
-      var thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
+      var thisEngineer = _db.Engineers
+        .Include(e => e.EngineerMachines)
+        .FirstOrDefault(engineer => engineer.EngineerId == id);
 
       if(thisEngineer == null)
       {
         return NotFound();
       }
 
-      ViewBag.MachineId = new MultiSelectList(_db.Machines, "MachineId", "Name");
+      var engineerMachineIds = thisEngineer.EngineerMachines.Select(em => em.MachineId).ToList();
+
+      ViewBag.MachineId = new MultiSelectList(_db.Machines, "MachineId", "Name", engineerMachineIds);
       return View(thisEngineer);
     }
 
@@ -76,20 +88,30 @@ namespace Factory.Controllers
     {
       if (ModelState.IsValid)
       {
-        var currentEngineerMachines = _db.EngineerMachines.Where(em => em.EngineerId == engineer.EngineerId);
-        _db.EngineerMachines.RemoveRange(currentEngineerMachines);
-
-        if (MachineId != null && MachineId.Count != 0)
+        var thisEngineer = _db.Engineers.FirstOrDefault(e => e.EngineerId == engineer.EngineerId);
+        if (thisEngineer == null)
         {
+          return NotFound();
+        }
+
+        thisEngineer.Name = engineer.Name;
+        _db.Entry(thisEngineer).State = EntityState.Modified;
+        _db.SaveChanges();
+
+        if (MachineId.Count != 0)
+        {
+          _db.EngineerMachines.RemoveRange(_db.EngineerMachines.Where(em => em.EngineerId == engineer.EngineerId));
           foreach (int id in MachineId)
           {
             _db.EngineerMachines.Add(new EngineerMachine() { MachineId = id, EngineerId = engineer.EngineerId });
           }
         }
-        _db.Entry(engineer).State = EntityState.Modified;
+
         _db.SaveChanges();
         return RedirectToAction("Index");
       }
+
+      ViewBag.MachineId = new MultiSelectList(_db.Machines, "MachineId", "Name", MachineId);
       return View(engineer);
     }
 

@@ -13,9 +13,8 @@
     <span asp-validation-for="Name" class="text-danger"></span>
   </div>
   <div class="form-group">
-    <label asp-for="EngineerMachines" class="control-label">Select Engineers</label>
-    <select asp-for="EngineerMachines" asp-items="@(new SelectList(ViewBag.Engineers,"EngineerId","Name"))" class="form-control"></select>
-    <span asp-validation-for="EngineerMachines" class="text-danger"></span>
+    <label for="SelectedEngineerId" class="control-label">Select Engineers</label>
+    <select id="SelectedEngineerId" name="SelectedEngineerId" asp-items="ViewBag.Engineers" class="form-control"></select>
   </div>
   <div class="form-group">
     <input type="submit" value="Create" class="btn btn-primary" />

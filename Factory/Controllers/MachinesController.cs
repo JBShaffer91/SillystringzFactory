@@ -22,17 +22,18 @@ namespace Factory.Controllers
 
     public ActionResult Create()
     {
-      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+      ViewBag.Engineers = new SelectList(_db.Engineers, "EngineerId", "Name");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Machine machine, int[] EngineerId)
+    public ActionResult Create(Machine machine, int[] SelectedEngineerId)
     {
       _db.Machines.Add(machine);
-      if (EngineerId.Length != 0)
+      _db.SaveChanges();
+      if (SelectedEngineerId.Length != 0)
       {
-        foreach (int id in EngineerId)
+        foreach (int id in SelectedEngineerId)
         {
           _db.EngineerMachines.Add(new EngineerMachine() { EngineerId = id, MachineId = machine.MachineId });
         }
@@ -56,20 +57,23 @@ namespace Factory.Controllers
 
     public ActionResult Edit(int id)
     {
-      var thisMachine = _db.Machines.FirstOrDefault(machine => machine.MachineId == id);
+      var thisMachine = _db.Machines
+                        .Include(m => m.EngineerMachines)
+                        .ThenInclude(em => em.Engineer)
+                        .FirstOrDefault(machine => machine.MachineId == id);
       if (thisMachine == null)
       {
         return NotFound();
       }
-      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+      ViewBag.Engineers = new SelectList(_db.Engineers, "EngineerId", "Name");
       return View(thisMachine);
     }
 
     [HttpPost]
     public ActionResult Edit(Machine machine, int[] EngineerId)
     {
-      var thisMachine = _db.Machines.FirstOrDefault(m => m.MachineId == machine.MachineId);
-      if (thisMachine == null)
+      var existingMachine = _db.Machines.FirstOrDefault(m => m.MachineId == machine.MachineId);
+      if (existingMachine == null)
       {
         return NotFound();
       }
@@ -82,7 +86,9 @@ namespace Factory.Controllers
           _db.EngineerMachines.Add(new EngineerMachine() { EngineerId = id, MachineId = machine.MachineId });
         }
       }
-      _db.Entry(machine).State = EntityState.Modified;
+
+      existingMachine.Name = machine.Name;
+      _db.Entry(existingMachine).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
@@ -105,6 +111,8 @@ namespace Factory.Controllers
       {
         return NotFound();
       }
+      var engineerMachinesToRemove = _db.EngineerMachines.Where(em => em.MachineId == id).ToList();
+      _db.EngineerMachines.RemoveRange(engineerMachinesToRemove);
       _db.Machines.Remove(thisMachine);
       _db.SaveChanges();
       return RedirectToAction("Index");
