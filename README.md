@@ -1,6 +1,6 @@
 # Factory Management Application
 
-This is a .NET 5 MVC application that allows factory managers to track engineers and machines. 
+This is a .NET 7 MVC application that allows factory managers to track engineers and machines. 
 
 ## Functionality
 
@@ -15,7 +15,7 @@ This application supports full CRUD (Create, Read, Update, Delete) operations fo
 - VSCode
 - GitBash
 - C#
-- .NET6 SDK
+- .NET7 SDK
 - WindowPowerShell
 - Razor
 - CSS
