@@ -1,10 +1,14 @@
 @model IEnumerable<Factory.Models.Machine>
 
 <h1>Machines</h1>
-
+<p>
+    <a href="@Url.Action("Create")">Create New Machine</a>
+</p>
 @foreach (var machine in Model)
 {
   <p>
-    @Html.ActionLink(machine.Name, "Details", new { id = machine.MachineId })
+    @Html.ActionLink(machine.Name, "Details", new { id = machine.MachineId }) |
+    <a href="@Url.Action("Edit", new { id = machine.MachineId })">Edit</a> |
+    <a href="@Url.Action("Delete", new { id = machine.MachineId })">Delete</a>
   </p>
 }

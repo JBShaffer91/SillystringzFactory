@@ -1,10 +1,24 @@
 ﻿@{
-  ViewData["Title"] = "Factory Management System";
+    ViewData["Title"] = "Factory Management System";
 }
 
-<div class="text-center">
-  <h1 class="display-4">Welcome to the Factory Management System</h1>
-  <p>
-    Use this system to manage your factory's engineers and machines. You can <a href="/Engineers">view, add, edit, or delete engineers</a> and <a href="/Machines">manage machines</a> too.
-  </p>
+<div class="container text-center">
+    <h1 class="display-4 mt-4">Welcome to the Factory Management System</h1>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6 mt-4">
+            <h2>Engineers</h2>
+            <p>
+                Manage your factory's engineers. You can view, add, edit, or delete engineers.
+            </p>
+            <a class="btn btn-primary" href="/Engineers">Manage Engineers</a>
+        </div>
+        <div class="col-md-6 mt-4">
+            <h2>Machines</h2>
+            <p>
+                Oversee your machines. View, add, update, or remove machines.
+            </p>
+            <a class="btn btn-primary" href="/Machines">Manage Machines</a>
+        </div>
+    </div>
 </div>
